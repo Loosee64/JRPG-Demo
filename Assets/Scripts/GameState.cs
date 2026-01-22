@@ -23,6 +23,11 @@ public class GameState : MonoBehaviour
         BattleStart();
     }
 
+    public State getTurn()
+    {
+        return current;
+    }
+
     public void BattleStart()
     {
         current = State.PLAYER1;
@@ -41,6 +46,20 @@ public class GameState : MonoBehaviour
                 break;
         }
         return m_entities[(int)State.ENEMY1].GetComponent<Health>();
+    }
+
+    public string GetTargetName(State t_target)
+    {
+        switch (t_target)
+        {
+            case State.PLAYER1:
+                return m_entities[(int)State.PLAYER1].GetComponent<CharacterData>().GetTitle();
+            case State.ENEMY1:
+                return m_entities[(int)State.ENEMY1].GetComponent<CharacterData>().GetTitle();
+            default:
+                break;
+        }
+        return m_entities[(int)State.ENEMY1].GetComponent<CharacterData>().GetTitle();
     }
 
     public void TurnEnd()

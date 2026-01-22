@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Enemy : MonoBehaviour
     Action m_action;
     TurnSystem m_turn;
     Health m_health;
+    CharacterData m_character;
+
+    public UnityEvent m_deadEvent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,7 +19,12 @@ public class Enemy : MonoBehaviour
         m_action = GetComponent<Action>();
         m_turn = GetComponent<TurnSystem>();
         m_health = GetComponent<Health>();
-    }   
+        m_character = GetComponent<CharacterData>();
+
+        m_health.setMax(m_character.GetMax());
+
+        m_deadEvent.AddListener(() => GameObject.FindGameObjectWithTag("Dialogue").GetComponent<Dialogue>().DisplayDeath(m_character.GetTitle()));
+    }
 
     // Update is called once per frame
     void Update()
@@ -26,9 +35,14 @@ public class Enemy : MonoBehaviour
         }
         else if (!m_health.IsAlive())
         {
-            Debug.Log("Dead");
+            m_deadEvent.Invoke();
         }
     }
 
-    
+    public string Name()
+    {
+        return m_character.GetTitle();
+    }
+
+
 }

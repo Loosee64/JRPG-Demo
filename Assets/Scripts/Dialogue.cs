@@ -1,0 +1,32 @@
+using UnityEngine;
+using TMPro;
+
+public class Dialogue : MonoBehaviour
+{
+    TextMeshProUGUI m_text;
+
+    [SerializeField]
+    GameState m_gameStateRef;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        m_text = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void DisplayDamage(int t_amount, string t_title, string t_target)
+    {
+        m_text.text = t_title + " dealt " + t_amount.ToString() + " damage to " + t_target + "!";
+    }
+
+    public void DisplayDeath(string t_title)
+    {
+        m_text.text = t_title + " has died!";
+    }
+}

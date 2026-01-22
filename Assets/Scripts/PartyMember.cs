@@ -9,6 +9,8 @@ public class PartyMember : MonoBehaviour
 
     Action m_action;
     TurnSystem m_turn;
+    Health m_health;
+    CharacterData m_character;
 
     int m_sp;
 
@@ -18,11 +20,20 @@ public class PartyMember : MonoBehaviour
         m_sp = m_maxSP;
         m_action = GetComponent<Action>();
         m_turn = GetComponent<TurnSystem>();
+        m_health = GetComponent<Health>();
+        m_character = GetComponent<CharacterData>();
+
+        m_health.setMax(m_character.GetMax());
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public string Name()
+    {
+        return m_character.GetTitle();
     }
 
     public void Attack()
