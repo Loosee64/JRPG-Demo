@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e910042725eaed40a9528cd2cb16e36, type: 3}
   m_Name: Diego
   m_EditorClassIdentifier: Assembly-CSharp::CharacterType
-  title: 
-  maxHealth: 0
+  title: Diego
+  maxHealth: 5
