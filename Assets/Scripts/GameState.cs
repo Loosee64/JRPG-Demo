@@ -1,8 +1,10 @@
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public enum State
 {
@@ -16,10 +18,16 @@ public class GameState : MonoBehaviour
     [SerializeField]
     private TurnSystem[] m_entities;
 
+    [SerializeField]
+    Button m_button;
+
+    public UnityEvent playerTurn;
+
     State current;
 
     private void Start()
     {
+        playerTurn.AddListener(GameObject.FindGameObjectWithTag("Dialogue").GetComponent<Dialogue>().PlayerTurn);
         BattleStart();
     }
 
@@ -82,5 +90,11 @@ public class GameState : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         m_entities[(int)current].StartTurn();
+
+        if (current < State.ENEMY1)
+        {
+            playerTurn.Invoke();
+            m_button.gameObject.SetActive(true);
+        }
     }
 }

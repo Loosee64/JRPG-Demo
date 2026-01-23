@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Dialogue : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         m_text = GetComponentInChildren<TextMeshProUGUI>();
+        PlayerTurn();
     }
 
     // Update is called once per frame
@@ -28,5 +30,10 @@ public class Dialogue : MonoBehaviour
     public void DisplayDeath(string t_title)
     {
         m_text.text = t_title + " has died!";
+    }
+
+    public void PlayerTurn()
+    {
+        m_text.text = "";
     }
 }

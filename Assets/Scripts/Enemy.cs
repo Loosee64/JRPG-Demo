@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
         else if (!m_health.IsAlive())
         {
             m_deadEvent.Invoke();
+            StartCoroutine(SpawnEnemy());
         }
     }
 
@@ -44,5 +46,16 @@ public class Enemy : MonoBehaviour
         return m_character.GetTitle();
     }
 
+    public void NewEnemy()
+    {
+        m_character.NewRandom();
+        m_health.setMax(m_character.GetMax());
+        m_health.FullHeal();
+    }
 
+    IEnumerator SpawnEnemy()
+    {
+        yield return new WaitForSeconds(1.0f);
+        NewEnemy();
+    }
 }

@@ -4,17 +4,22 @@ using TMPro;
 public class Health : MonoBehaviour
 {
     [SerializeField]
-    private int m_maxHealth;
-    [SerializeField]
     private HealthBarUI m_healthBarUI;
     
     private TextMeshProUGUI m_text;
 
     int m_health;
+    private int m_maxHealth;
 
-    private void Start()
+    private void Awake()
     {
         m_text = m_healthBarUI.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void FullHeal()
+    {
+        m_health = m_maxHealth;
+        m_healthBarUI.setHealth(m_health);
     }
 
     public void setMax(int t_amount)
