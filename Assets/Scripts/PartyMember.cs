@@ -5,13 +5,15 @@ public class PartyMember : MonoBehaviour
     [SerializeField]
     private int m_maxSP;
     [SerializeField]
-    private ActionType m_type;
+    private ActionType[] m_actions;
 
     Action m_action;
     TurnSystem m_turn;
     Health m_health;
     CharacterData m_character;
 
+    float m_xp;
+    int m_level;
     int m_sp;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,11 +38,27 @@ public class PartyMember : MonoBehaviour
         return m_character.GetTitle();
     }
 
-    public void Attack()
+    public void AddXP(float t_amount)
+    {
+        m_xp += t_amount;
+        if (m_xp >= 10)
+        {
+            LevelUp((int)m_xp / 10);
+        }
+    }
+
+    private void LevelUp(int t_amount)
+    {
+        m_level += t_amount;
+        m_character.IncreaseMax(m_level);
+        m_health.setMax(m_character.GetMax());
+    }
+
+    public void Attack(int t_type)
     {
         if (m_turn.TurnCheck())
         {
-            m_action.Execute(State.ENEMY1, m_type);
+            m_action.Execute(State.ENEMY1, m_actions[t_type]);
         }
     }
 }

@@ -8,12 +8,19 @@ public class CharacterData : MonoBehaviour
     CharacterType[] m_allTypes;
 
     int maxHealth;
+    int xp;
     string title;
 
     private void Awake()
     {
         maxHealth = m_character.maxHealth;
         title = m_character.title;
+        xp = m_character.xp;
+    }
+
+    public void IncreaseMax(int t_level)
+    {
+        maxHealth = maxHealth + ((maxHealth / 5) * t_level);
     }
 
     public void NewRandom()
@@ -25,7 +32,10 @@ public class CharacterData : MonoBehaviour
         title = m_character.title;
     }
 
+    
+
     public int GetMax() { return maxHealth; }
     public string GetTitle() { return title; }
+    public int GetXP() { return xp; }
 
 }

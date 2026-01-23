@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     CharacterData m_character;
 
     public UnityEvent m_deadEvent;
+    bool m_respawned = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
         m_health.setMax(m_character.GetMax());
 
         m_deadEvent.AddListener(() => GameObject.FindGameObjectWithTag("Dialogue").GetComponent<Dialogue>().DisplayDeath(m_character.GetTitle()));
+        m_deadEvent.AddListener(() => GameObject.FindGameObjectWithTag("Player").GetComponent<PartyMember>().AddXP(m_character.GetXP()));
     }
 
     // Update is called once per frame
@@ -34,9 +36,10 @@ public class Enemy : MonoBehaviour
         {
             m_action.Execute(State.PLAYER1, m_type);
         }
-        else if (!m_health.IsAlive())
+        else if (!m_health.IsAlive() && !m_respawned)
         {
             m_deadEvent.Invoke();
+            m_respawned = true;
             StartCoroutine(SpawnEnemy());
         }
     }
@@ -57,5 +60,6 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         NewEnemy();
+        m_respawned = false;
     }
 }

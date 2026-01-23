@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterType
   title: Valentine
   maxHealth: 50
+  xp: 50
